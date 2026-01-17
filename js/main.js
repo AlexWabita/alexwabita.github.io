@@ -387,3 +387,182 @@ const progressObserver = new IntersectionObserver((entries) => {
 skillCards.forEach(card => {
     progressObserver.observe(card);
 });
+
+// ==========================================
+// PROJECTS - LOAD FROM GITHUB
+// ==========================================
+
+// Language colors for badges
+const languageColors = {
+    'Python': '#3776AB',
+    'JavaScript': '#F7DF1E',
+    'HTML': '#E34F26',
+    'CSS': '#1572B6',
+    'TypeScript': '#3178C6',
+    'Java': '#007396',
+    'C': '#A8B9CC',
+    'C++': '#00599C',
+    'Shell': '#89E051',
+    'Jupyter Notebook': '#DA5B0B'
+};
+
+// Create project card HTML
+function createProjectCard(repo, isFeatured = false) {
+    const language = repo.language || 'Code';
+    const languageColor = languageColors[language] || '#6b7280';
+    const topics = repo.topics || [];
+    
+    return `
+        <div class="project-card ${isFeatured ? 'featured' : ''} scroll-reveal">
+            <div class="project-header">
+                <h3 class="project-title">
+                    <a href="${repo.url}" target="_blank" rel="noopener noreferrer">
+                        ${repo.name}
+                    </a>
+                </h3>
+                ${isFeatured ? '<span class="featured-badge">Featured</span>' : ''}
+            </div>
+            
+            <p class="project-description">
+                ${repo.description || 'No description available'}
+            </p>
+            
+            ${topics.length > 0 ? `
+                <div class="project-tech">
+                    ${topics.slice(0, 4).map(topic => 
+                        `<span class="tech-tag">${topic}</span>`
+                    ).join('')}
+                </div>
+            ` : ''}
+            
+            <div class="project-stats">
+                ${language ? `
+                    <span class="language-tag">
+                        <span class="language-dot" style="background-color: ${languageColor}"></span>
+                        ${language}
+                    </span>
+                ` : ''}
+                <span class="stat-item">⭐ ${repo.stars}</span>
+                <span class="stat-item">🔱 ${repo.forks}</span>
+            </div>
+            
+            <div class="project-links">
+                <a href="${repo.url}" target="_blank" rel="noopener noreferrer" class="project-link primary">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    View Code
+                </a>
+                ${repo.homepage ? `
+                    <a href="${repo.homepage}" target="_blank" rel="noopener noreferrer" class="project-link">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                            <path d="M10 2L14 6L10 10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 6H2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Live Demo
+                    </a>
+                ` : ''}
+            </div>
+        </div>
+    `;
+}
+
+// Load projects from GitHub
+async function loadProjects() {
+    const featuredContainer = document.getElementById('featuredProjects');
+    const allContainer = document.getElementById('allProjects');
+    
+    try {
+        // Load featured (pinned) repos
+        const featuredRepos = await window.GitHubAPI.fetchPinnedRepos();
+        
+        if (featuredRepos.length > 0) {
+            featuredContainer.innerHTML = featuredRepos
+                .map(repo => createProjectCard(repo, true))
+                .join('');
+        } else {
+            featuredContainer.innerHTML = '<p class="loading-state">No pinned repositories found</p>';
+        }
+        
+        // Load all repos
+        const allRepos = await window.GitHubAPI.fetchRepos({ 
+            sort: 'updated', 
+            per_page: 12 
+        });
+        
+        if (allRepos.length > 0) {
+            // Store repos globally for sorting
+            window.projectsData = allRepos;
+            
+            allContainer.innerHTML = allRepos
+                .map(repo => createProjectCard(repo, false))
+                .join('');
+            
+            // Setup sort functionality AFTER data is loaded
+            setupProjectSorting();
+        } else {
+            allContainer.innerHTML = '<div class="error-state"><h4>No repositories found</h4><p>Check back soon for new projects!</p></div>';
+        }
+        
+        // Re-observe scroll reveal elements
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            if (!el.classList.contains('revealed')) {
+                revealObserver.observe(el);
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error loading projects:', error);
+        featuredContainer.innerHTML = '<div class="error-state"><h4>Failed to load projects</h4><p>Please check your internet connection and try again.</p></div>';
+        allContainer.innerHTML = '';
+    }
+}
+
+// Sort projects function
+function setupProjectSorting() {
+    const sortBtns = document.querySelectorAll('.sort-btn');
+    
+    sortBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            sortBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const sortType = btn.getAttribute('data-sort');
+            const allContainer = document.getElementById('allProjects');
+            
+            if (!window.projectsData || window.projectsData.length === 0) {
+                console.error('No projects data available');
+                return;
+            }
+            
+            let sortedRepos = [...window.projectsData];
+            
+            switch(sortType) {
+                case 'stars':
+                    sortedRepos.sort((a, b) => b.stars - a.stars);
+                    break;
+                case 'name':
+                    sortedRepos.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'updated':
+                default:
+                    sortedRepos.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+                    break;
+            }
+            
+            allContainer.innerHTML = sortedRepos
+                .map(repo => createProjectCard(repo, false))
+                .join('');
+            
+            // Re-observe new elements for scroll animations
+            allContainer.querySelectorAll('.scroll-reveal').forEach(el => {
+                revealObserver.observe(el);
+            });
+        });
+    });
+}
+
+// Load projects when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    loadProjects();
+});

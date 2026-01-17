@@ -460,10 +460,53 @@
             </div>
         </section>
 
-        <!-- Projects Section (placeholder) -->
-        <section id="projects" class="section">
+        <!-- Projects Section -->
+        <section id="projects" class="section projects-section">
             <div class="container">
-                <h2>Projects Section Coming Soon...</h2>
+                <div class="section-header scroll-reveal">
+                    <span class="section-label">My Work</span>
+                    <h2 class="section-title">Featured Projects</h2>
+                    <p class="section-description">
+                        A collection of projects showcasing my skills and learning journey
+                    </p>
+                </div>
+
+                <!-- Featured Projects -->
+                <div class="featured-projects">
+                    <h3 class="subsection-title scroll-reveal">Pinned Repositories</h3>
+                    <div class="projects-grid featured-grid" id="featuredProjects">
+                        <!-- Loading state -->
+                        <div class="loading-state">
+                            <div class="spinner"></div>
+                            <p>Loading projects from GitHub...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- All Projects -->
+                <div class="all-projects">
+                    <div class="projects-header scroll-reveal">
+                        <h3 class="subsection-title">All Repositories</h3>
+                        <div class="projects-controls">
+                            <button class="sort-btn active" data-sort="updated">Recently Updated</button>
+                            <button class="sort-btn" data-sort="stars">Most Stars</button>
+                            <button class="sort-btn" data-sort="name">Name</button>
+                        </div>
+                    </div>
+                    <div class="projects-grid all-grid" id="allProjects">
+                        <!-- Projects will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="projects-cta scroll-reveal">
+                    <p>Want to see more? Check out all my repositories on GitHub</p>
+                    <a href="https://github.com/AlexWabita?tab=repositories" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 0C4.477 0 0 4.477 0 10c0 4.42 2.865 8.17 6.84 9.49.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.71-2.78.6-3.37-1.34-3.37-1.34-.45-1.15-1.11-1.46-1.11-1.46-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02.8-.22 1.65-.33 2.5-.33.85 0 1.7.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85 0 1.34-.01 2.42-.01 2.75 0 .27.18.58.69.48C17.14 18.16 20 14.42 20 10A10 10 0 0010 0z"/>
+                        </svg>
+                        <span>View All on GitHub</span>
+                    </a>
+                </div>
             </div>
         </section>
 
