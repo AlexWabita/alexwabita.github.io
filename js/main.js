@@ -278,3 +278,43 @@ if (scrollIndicator) {
         }
     });
 }
+
+// ==========================================
+// ANIMATED COUNTER FOR STATS
+// ==========================================
+
+function animateCounter(element, target, duration = 2000) {
+    let start = 0;
+    const increment = target / (duration / 16);
+    
+    const timer = setInterval(() => {
+        start += increment;
+        if (start >= target) {
+            element.textContent = target;
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(start);
+        }
+    }, 16);
+}
+
+// Observe stat cards and trigger animation
+const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const statNumber = entry.target.querySelector('.stat-number');
+            if (statNumber && !statNumber.classList.contains('animated')) {
+                const target = parseInt(statNumber.getAttribute('data-target'));
+                animateCounter(statNumber, target);
+                statNumber.classList.add('animated');
+            }
+        }
+    });
+}, {
+    threshold: 0.5
+});
+
+// Observe all stat cards
+document.querySelectorAll('.stat-card').forEach(card => {
+    statObserver.observe(card);
+});
