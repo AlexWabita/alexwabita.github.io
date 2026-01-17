@@ -589,21 +589,27 @@ body.light-theme .navbar {
 }
 
 .badge-1 {
-    top: 10%;
-    right: 10%;
+    top: 5%;
+    right: 15%;
     animation-delay: 0s;
 }
 
 .badge-2 {
-    bottom: 20%;
-    left: 0;
-    animation-delay: 1s;
+    top: 35%;
+    right: -10%;
+    animation-delay: 0.5s;
 }
 
 .badge-3 {
-    top: 50%;
-    right: -5%;
-    animation-delay: 2s;
+    bottom: 30%;
+    left: -10%;
+    animation-delay: 1s;
+}
+
+.badge-4 {
+    bottom: 5%;
+    right: 15%;
+    animation-delay: 1.5s;
 }
 
 /* Scroll Indicator */

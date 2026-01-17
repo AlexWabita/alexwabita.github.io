@@ -222,9 +222,10 @@ const typingText = document.getElementById('typingText');
 if (typingText) {
     const roles = [
         'System Developer',
-        'Python Enthusiast',
-        'Cybersecurity Explorer',
-        'Cloud Technology Learner',
+        'Python Developer',
+        'AI & ML Enthusiast',
+        'Web Developer',
+        'Cybersecurity Learner',
         'Problem Solver'
     ];
     
