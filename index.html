@@ -262,10 +262,201 @@
             </div>
         </section>
 
-        <!-- Skills Section (placeholder) -->
-        <section id="skills" class="section">
+        <!-- Skills Section -->
+        <section id="skills" class="section skills-section">
             <div class="container">
-                <h2>Skills Section Coming Soon...</h2>
+                <div class="section-header scroll-reveal">
+                    <span class="section-label">My Expertise</span>
+                    <h2 class="section-title">Skills & Technologies</h2>
+                    <p class="section-description">
+                        Technologies I work with and continuously learning to build innovative solutions
+                    </p>
+                </div>
+
+                <div class="skills-filter scroll-reveal">
+                    <button class="filter-btn active" data-filter="all">All Skills</button>
+                    <button class="filter-btn" data-filter="languages">Languages</button>
+                    <button class="filter-btn" data-filter="tools">Tools & Platforms</button>
+                    <button class="filter-btn" data-filter="learning">Currently Learning</button>
+                </div>
+
+                <div class="skills-grid">
+                    <!-- Python -->
+                    <div class="skill-card scroll-reveal" data-category="languages">
+                        <div class="skill-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <path d="M24 4C20.5 4 17.5 4.5 15 5.5C12.5 6.5 11 8 11 10V14C11 16 12.5 17.5 15 18.5V22.5C12.5 23.5 11 25 11 27V31C11 33 12.5 34.5 15 35.5C17.5 36.5 20.5 37 24 37C27.5 37 30.5 36.5 33 35.5C35.5 34.5 37 33 37 31V27C37 25 35.5 23.5 33 22.5V18.5C35.5 17.5 37 16 37 14V10C37 8 35.5 6.5 33 5.5C30.5 4.5 27.5 4 24 4Z" fill="#3776AB"/>
+                                <ellipse cx="24" cy="10" rx="13" ry="6" fill="#FFD43B"/>
+                            </svg>
+                        </div>
+                        <div class="skill-info">
+                            <h3>Python</h3>
+                            <p>Primary language for development, automation, and data analysis</p>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-progress="75"></div>
+                            </div>
+                            <span class="progress-label">Intermediate</span>
+                        </div>
+                    </div>
+
+                    <!-- AI/ML -->
+                    <div class="skill-card scroll-reveal" data-category="learning">
+                        <div class="skill-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <circle cx="24" cy="24" r="20" fill="url(#ai-gradient)"/>
+                                <path d="M24 14L28 22L36 24L28 26L24 34L20 26L12 24L20 22L24 14Z" fill="white"/>
+                                <defs>
+                                    <linearGradient id="ai-gradient" x1="4" y1="4" x2="44" y2="44">
+                                        <stop offset="0%" stop-color="#00d9ff"/>
+                                        <stop offset="100%" stop-color="#7c3aed"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <div class="skill-info">
+                            <h3>AI & Machine Learning</h3>
+                            <p>Exploring ML algorithms, neural networks, and AI integration</p>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-progress="40"></div>
+                            </div>
+                            <span class="progress-label">Learning</span>
+                        </div>
+                    </div>
+
+                    <!-- Web Development -->
+                    <div class="skill-card scroll-reveal" data-category="languages">
+                        <div class="skill-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <rect x="8" y="8" width="32" height="32" rx="4" fill="#E34F26"/>
+                                <path d="M16 16L18 28L24 30L30 28L32 16H16Z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="skill-info">
+                            <h3>HTML/CSS/JavaScript</h3>
+                            <p>Building responsive and interactive web interfaces</p>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-progress="65"></div>
+                            </div>
+                            <span class="progress-label">Intermediate</span>
+                        </div>
+                    </div>
+
+                    <!-- Git & GitHub -->
+                    <div class="skill-card scroll-reveal" data-category="tools">
+                        <div class="skill-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <circle cx="24" cy="24" r="20" fill="#181717"/>
+                                <path d="M24 12C17.4 12 12 17.4 12 24C12 29.4 15.6 33.9 20.4 35.4C21 35.5 21.2 35.1 21.2 34.8V33C18.4 33.7 17.7 31.7 17.7 31.7C17.2 30.4 16.4 30 16.4 30C15.3 29.3 16.5 29.3 16.5 29.3C17.7 29.4 18.3 30.5 18.3 30.5C19.4 32.3 21.2 31.8 21.3 31.5C21.4 30.7 21.7 30.2 22 30C19.9 29.8 17.7 28.9 17.7 25.2C17.7 24 18.1 23 18.8 22.2C18.7 22 18.3 20.9 18.9 19.4C18.9 19.4 19.9 19.1 21.2 20C22.2 19.7 23.1 19.6 24 19.6C24.9 19.6 25.8 19.7 26.8 20C28.1 19.1 29.1 19.4 29.1 19.4C29.7 20.9 29.3 22 29.2 22.2C29.9 23 30.3 24 30.3 25.2C30.3 28.9 28.1 29.8 26 30C26.4 30.3 26.8 31 26.8 32V34.8C26.8 35.1 27 35.5 27.6 35.4C32.4 33.9 36 29.4 36 24C36 17.4 30.6 12 24 12Z" fill="white"/>
+                            </svg>
+                        </div>
+                        <div class="skill-info">
+                            <h3>Git & GitHub</h3>
+                            <p>Version control and collaborative development</p>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-progress="70"></div>
+                            </div>
+                            <span class="progress-label">Proficient</span>
+                        </div>
+                    </div>
+
+                    <!-- Linux -->
+                    <div class="skill-card scroll-reveal" data-category="tools">
+                        <div class="skill-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <circle cx="24" cy="24" r="20" fill="#FCC624"/>
+                                <path d="M24 10C23 10 22 11 22 12V14C22 15 23 16 24 16C25 16 26 15 26 14V12C26 11 25 10 24 10ZM18 14C17 14 16 15 16 16C16 17 17 18 18 18C19 18 20 17 20 16C20 15 19 14 18 14ZM30 14C29 14 28 15 28 16C28 17 29 18 30 18C31 18 32 17 32 16C32 15 31 14 30 14Z" fill="#000000"/>
+                            </svg>
+                        </div>
+                        <div class="skill-info">
+                            <h3>Linux (Kali/Parrot OS)</h3>
+                            <p>Command line proficiency and system administration</p>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-progress="55"></div>
+                            </div>
+                            <span class="progress-label">Learning</span>
+                        </div>
+                    </div>
+
+                    <!-- Cybersecurity -->
+                    <div class="skill-card scroll-reveal" data-category="learning">
+                        <div class="skill-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <path d="M24 4L8 12V22C8 31 14 39 24 44C34 39 40 31 40 22V12L24 4Z" fill="#00d9ff"/>
+                                <path d="M24 12L16 16V22C16 27 19 32 24 36C29 32 32 27 32 22V16L24 12Z" fill="#0a0e27"/>
+                            </svg>
+                        </div>
+                        <div class="skill-info">
+                            <h3>Cybersecurity Basics</h3>
+                            <p>Ethical hacking fundamentals and security principles</p>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-progress="35"></div>
+                            </div>
+                            <span class="progress-label">Beginner</span>
+                        </div>
+                    </div>
+
+                    <!-- Cloud (AWS/Azure) -->
+                    <div class="skill-card scroll-reveal" data-category="learning">
+                        <div class="skill-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <path d="M36 28C38.2 28 40 26.2 40 24C40 21.8 38.2 20 36 20C35.8 20 35.6 20 35.4 20.1C34.6 16.6 31.6 14 28 14C26.2 14 24.6 14.7 23.4 15.8C22.2 13.6 19.9 12 17.2 12C13.3 12 10 15.1 10 19C10 19.3 10 19.6 10.1 19.9C8.3 20.9 7 22.8 7 25C7 28.3 9.7 31 13 31H36Z" fill="#FF9900"/>
+                            </svg>
+                        </div>
+                        <div class="skill-info">
+                            <h3>Cloud (AWS/Azure)</h3>
+                            <p>Cloud computing fundamentals and deployment</p>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-progress="30"></div>
+                            </div>
+                            <span class="progress-label">Beginner</span>
+                        </div>
+                    </div>
+
+                    <!-- Data Analysis -->
+                    <div class="skill-card scroll-reveal" data-category="learning">
+                        <div class="skill-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <rect x="8" y="28" width="8" height="12" fill="#10b981"/>
+                                <rect x="20" y="20" width="8" height="20" fill="#00d9ff"/>
+                                <rect x="32" y="12" width="8" height="28" fill="#7c3aed"/>
+                            </svg>
+                        </div>
+                        <div class="skill-info">
+                            <h3>Data Analysis</h3>
+                            <p>Pandas, NumPy for data manipulation and insights</p>
+                        </div>
+                        <div class="skill-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" data-progress="45"></div>
+                            </div>
+                            <span class="progress-label">Learning</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-cta scroll-reveal">
+                    <p>Always learning and expanding my skill set to stay ahead in the tech industry</p>
+                    <a href="https://github.com/AlexWabita/python-mastery-2026" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+                        <span>View My Learning Journey</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </section>
 

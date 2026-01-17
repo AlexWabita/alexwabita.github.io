@@ -55,32 +55,45 @@ window.addEventListener('scroll', () => {
 // ACTIVE NAV LINK ON SCROLL
 // ==========================================
 
-const sections = document.querySelectorAll('.section');
-
-const observerOptions = {
-    threshold: 0.3,
-    rootMargin: '-100px 0px -50% 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const targetId = entry.target.getAttribute('id');
-            
-            // Remove active class from all links
-            navLinks.forEach(link => link.classList.remove('active'));
-            
-            // Add active class to current section's link
-            const activeLink = document.querySelector(`.nav-link[href="#${targetId}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
+function updateActiveNavLink() {
+    const sections = document.querySelectorAll('.section');
+    const scrollPosition = window.scrollY + 200; // Increased offset for better detection
+    
+    let currentSection = '';
+    
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+        
+        // Check if we're in this section
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            currentSection = sectionId;
         }
     });
-}, observerOptions);
+    
+    // Update nav links
+    if (currentSection) {
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+}
 
-sections.forEach(section => {
-    observer.observe(section);
+// Update on scroll with throttle
+window.addEventListener('scroll', throttle(updateActiveNavLink, 50));
+
+// Update on page load
+window.addEventListener('load', updateActiveNavLink);
+
+// Update after smooth scroll completes
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        setTimeout(updateActiveNavLink, 800);
+    });
 });
 
 // ==========================================
@@ -318,4 +331,59 @@ const statObserver = new IntersectionObserver((entries) => {
 // Observe all stat cards
 document.querySelectorAll('.stat-card').forEach(card => {
     statObserver.observe(card);
+});
+
+// ==========================================
+// SKILLS FILTER
+// ==========================================
+
+const filterBtns = document.querySelectorAll('.filter-btn');
+const skillCards = document.querySelectorAll('.skill-card');
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterBtns.forEach(b => b.classList.remove('active'));
+        // Add active class to clicked button
+        btn.classList.add('active');
+        
+        const filter = btn.getAttribute('data-filter');
+        
+        skillCards.forEach(card => {
+            if (filter === 'all') {
+                card.classList.remove('hidden');
+            } else {
+                const category = card.getAttribute('data-category');
+                if (category === filter) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            }
+        });
+    });
+});
+
+// ==========================================
+// ANIMATE SKILL PROGRESS BARS
+// ==========================================
+
+const progressObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const progressFill = entry.target.querySelector('.progress-fill');
+            if (progressFill && !progressFill.classList.contains('animated')) {
+                const targetWidth = progressFill.getAttribute('data-progress');
+                progressFill.style.setProperty('--target-width', `${targetWidth}%`);
+                progressFill.classList.add('animated');
+            }
+        }
+    });
+}, {
+    threshold: 0.3
+});
+
+// Observe all skill cards for progress animation
+skillCards.forEach(card => {
+    progressObserver.observe(card);
 });
