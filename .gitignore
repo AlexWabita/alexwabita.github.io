@@ -1,0 +1,20 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Optional: if you add Node.js later
+node_modules/
+package-lock.json
+
+# Optional: backup files
+*.bak
+*~

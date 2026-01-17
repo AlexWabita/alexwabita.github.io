@@ -1,0 +1,214 @@
+// ==========================================
+// NAVIGATION FUNCTIONALITY
+// ==========================================
+
+// Mobile Menu Toggle
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('navMenu');
+const navLinks = document.querySelectorAll('.nav-link');
+
+hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+    document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+});
+
+// Close mobile menu when clicking a nav link
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+});
+
+// ==========================================
+// NAVBAR SCROLL EFFECT
+// ==========================================
+
+const navbar = document.getElementById('navbar');
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    // Add shadow when scrolled
+    if (currentScroll > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+    
+    lastScroll = currentScroll;
+});
+
+// ==========================================
+// ACTIVE NAV LINK ON SCROLL
+// ==========================================
+
+const sections = document.querySelectorAll('.section');
+
+const observerOptions = {
+    threshold: 0.3,
+    rootMargin: '-100px 0px -50% 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const targetId = entry.target.getAttribute('id');
+            
+            // Remove active class from all links
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            // Add active class to current section's link
+            const activeLink = document.querySelector(`.nav-link[href="#${targetId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+    });
+}, observerOptions);
+
+sections.forEach(section => {
+    observer.observe(section);
+});
+
+// ==========================================
+// SMOOTH SCROLL
+// ==========================================
+
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+        
+        if (targetSection) {
+            const offsetTop = targetSection.offsetTop - 70; // Account for fixed navbar
+            window.scrollTo({
+                top: offsetTop,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// ==========================================
+// THEME TOGGLE
+// ==========================================
+
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = themeToggle.querySelector('.theme-icon');
+
+// Check for saved theme preference or default to dark
+const currentTheme = localStorage.getItem('theme') || 'dark';
+document.body.classList.toggle('light-theme', currentTheme === 'light');
+themeIcon.textContent = currentTheme === 'light' ? '☀️' : '🌙';
+
+themeToggle.addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('light-theme');
+    const newTheme = isLight ? 'light' : 'dark';
+    
+    localStorage.setItem('theme', newTheme);
+    themeIcon.textContent = isLight ? '☀️' : '🌙';
+});
+
+// ==========================================
+// SCROLL REVEAL ANIMATIONS
+// ==========================================
+
+const revealElements = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right');
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+});
+
+revealElements.forEach(element => {
+    revealObserver.observe(element);
+});
+
+// ==========================================
+// UTILITY FUNCTIONS
+// ==========================================
+
+// Debounce function for performance
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// Throttle function for scroll events
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    };
+}
+
+// ==========================================
+// LOADING ANIMATION
+// ==========================================
+
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+});
+
+// ==========================================
+// CONSOLE MESSAGE (Easter Egg)
+// ==========================================
+
+console.log(
+    '%c👋 Hey there, curious developer!',
+    'color: #00d9ff; font-size: 20px; font-weight: bold;'
+);
+console.log(
+    '%cLike what you see? Let\'s connect!',
+    'color: #7c3aed; font-size: 14px;'
+);
+console.log(
+    '%c📧 njerialexwabita@gmail.com',
+    'color: #10b981; font-size: 12px;'
+);
+
+// ==========================================
+// PERFORMANCE MONITORING (Optional)
+// ==========================================
+
+if (window.performance) {
+    window.addEventListener('load', () => {
+        const perfData = window.performance.timing;
+        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+        console.log(`⚡ Page loaded in ${pageLoadTime}ms`);
+    });
+}
