@@ -379,7 +379,7 @@ body.light-theme .navbar {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding-top: 70px;
+    padding-top: 100px;
     overflow: hidden;
 }
 
@@ -528,6 +528,7 @@ body.light-theme .navbar {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: var(--spacing-xl) 0;
 }
 
 .image-wrapper {
