@@ -212,3 +212,69 @@ if (window.performance) {
         console.log(`⚡ Page loaded in ${pageLoadTime}ms`);
     });
 }
+
+// ==========================================
+// HERO TYPING EFFECT
+// ==========================================
+
+const typingText = document.getElementById('typingText');
+
+if (typingText) {
+    const roles = [
+        'System Developer',
+        'Python Enthusiast',
+        'Cybersecurity Explorer',
+        'Cloud Technology Learner',
+        'Problem Solver'
+    ];
+    
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let typingSpeed = 100;
+    
+    function typeRole() {
+        const currentRole = roles[roleIndex];
+        
+        if (isDeleting) {
+            typingText.textContent = currentRole.substring(0, charIndex - 1);
+            charIndex--;
+            typingSpeed = 50;
+        } else {
+            typingText.textContent = currentRole.substring(0, charIndex + 1);
+            charIndex++;
+            typingSpeed = 100;
+        }
+        
+        if (!isDeleting && charIndex === currentRole.length) {
+            // Pause at end before deleting
+            typingSpeed = 2000;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            // Move to next role
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            typingSpeed = 500;
+        }
+        
+        setTimeout(typeRole, typingSpeed);
+    }
+    
+    // Start typing effect after a brief delay
+    setTimeout(typeRole, 1000);
+}
+
+// ==========================================
+// SCROLL INDICATOR CLICK
+// ==========================================
+
+const scrollIndicator = document.querySelector('.scroll-indicator');
+
+if (scrollIndicator) {
+    scrollIndicator.addEventListener('click', () => {
+        const aboutSection = document.getElementById('about');
+        if (aboutSection) {
+            aboutSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+}
