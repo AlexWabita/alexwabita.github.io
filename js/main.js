@@ -630,3 +630,26 @@ if (contactForm) {
         }
     });
 }
+
+// ==========================================
+// BACK TO TOP BUTTON
+// ==========================================
+
+const backToTopBtn = document.getElementById('backToTop');
+
+// Show/hide button based on scroll position
+window.addEventListener('scroll', throttle(() => {
+    if (window.pageYOffset > 500) {
+        backToTopBtn.classList.add('visible');
+    } else {
+        backToTopBtn.classList.remove('visible');
+    }
+}, 100));
+
+// Scroll to top when clicked
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
