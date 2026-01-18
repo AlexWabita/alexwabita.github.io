@@ -653,3 +653,358 @@ backToTopBtn.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+
+// ==========================================
+// BLOG FUNCTIONALITY
+// ==========================================
+
+let currentBlogFilter = 'all';
+let currentBlogSort = 'recent';
+let visibleBlogsCount = 6;
+
+// Format date function
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('en-US', options);
+}
+
+// Create blog card HTML
+function createBlogCard(article, isFeatured = false) {
+    return `
+        <div class="blog-card ${isFeatured ? 'featured' : ''} scroll-reveal">
+            <div class="blog-image">
+                <img src="${article.image}" alt="${article.title}" loading="lazy">
+                <span class="blog-category">${article.category}</span>
+            </div>
+            
+            <div class="blog-content">
+                <div class="blog-meta">
+                    <span class="blog-date">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
+                            <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
+                            <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
+                        </svg>
+                        ${formatDate(article.date)}
+                    </span>
+                    <span class="read-time">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                            <polyline points="12 6 12 12 16 14" stroke-width="2"/>
+                        </svg>
+                        ${article.readTime}
+                    </span>
+                </div>
+                
+                <h3 class="blog-title">
+                    <a href="blog-post.html?slug=${article.slug}" class="blog-link">
+                        ${article.title}
+                    </a>
+                </h3>
+                
+                <p class="blog-excerpt">${article.excerpt}</p>
+                
+                ${article.tags.length > 0 ? `
+                    <div class="blog-tags">
+                        ${article.tags.slice(0, 3).map(tag => 
+                            `<span class="blog-tag">${tag}</span>`
+                        ).join('')}
+                    </div>
+                ` : ''}
+                
+                <div class="blog-stats">
+                    <span class="stat-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-width="2"/>
+                            <circle cx="12" cy="12" r="3" stroke-width="2"/>
+                        </svg>
+                        ${article.views} views
+                    </span>
+                    <button class="like-btn" data-id="${article.id}">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-width="2"/>
+                        </svg>
+                        ${article.likes} likes
+                    </button>
+                </div>
+                
+                <a href="blog-post.html?slug=${article.slug}" class="read-more-btn">
+                    Read Article
+                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                        <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    `;
+}
+
+// Load blogs
+async function loadBlogs() {
+    const featuredContainer = document.getElementById('featuredBlogs');
+    const blogsContainer = document.getElementById('blogsGrid');
+    
+    try {
+        // Load featured articles
+        const featuredArticles = window.BlogAPI.getFeaturedArticles();
+        
+        if (featuredArticles.length > 0) {
+            featuredContainer.innerHTML = featuredArticles
+                .map(article => createBlogCard(article, true))
+                .join('');
+        } else {
+            featuredContainer.innerHTML = '<p class="loading-state">No featured articles found</p>';
+        }
+        
+        // Load all articles
+        const allArticles = window.BlogAPI.getAllArticles();
+        
+        if (allArticles.length > 0) {
+            // Store articles globally for filtering and sorting
+            window.blogsData = allArticles;
+            
+            // Display initial set of articles
+            displayFilteredBlogs();
+            
+            // Update counters
+            updateBlogCounters();
+        } else {
+            blogsContainer.innerHTML = '<div class="error-state"><h4>No articles found</h4><p>Check back soon for new articles!</p></div>';
+        }
+        
+        // Re-observe scroll reveal elements
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            if (!el.classList.contains('revealed')) {
+                revealObserver.observe(el);
+            }
+        });
+        
+    } catch (error) {
+        console.error('Error loading blogs:', error);
+        featuredContainer.innerHTML = '<div class="error-state"><h4>Failed to load articles</h4><p>Please try again later.</p></div>';
+        blogsContainer.innerHTML = '';
+    }
+}
+
+// Display filtered and sorted blogs
+function displayFilteredBlogs() {
+    const blogsContainer = document.getElementById('blogsGrid');
+    if (!window.blogsData) return;
+    
+    let filteredBlogs = window.BlogAPI.getArticlesByCategory(currentBlogFilter);
+    
+    // Apply sorting
+    switch(currentBlogSort) {
+        case 'popular':
+            filteredBlogs = [...filteredBlogs].sort((a, b) => b.views - a.views);
+            break;
+        case 'likes':
+            filteredBlogs = [...filteredBlogs].sort((a, b) => b.likes - a.likes);
+            break;
+        case 'recent':
+        default:
+            filteredBlogs = [...filteredBlogs].sort((a, b) => new Date(b.date) - new Date(a.date));
+            break;
+    }
+    
+    // Update total count
+    const totalCountElement = document.getElementById('totalCount');
+    if (totalCountElement) {
+        totalCountElement.textContent = filteredBlogs.length;
+    }
+    
+    // Display only visible count
+    const visibleBlogs = filteredBlogs.slice(0, visibleBlogsCount);
+    
+    blogsContainer.innerHTML = visibleBlogs
+        .map(article => createBlogCard(article, false))
+        .join('');
+    
+    // Update visible count
+    const visibleCountElement = document.getElementById('visibleCount');
+    if (visibleCountElement) {
+        visibleCountElement.textContent = Math.min(visibleBlogsCount, filteredBlogs.length);
+    }
+    
+    // Show/hide load more button
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+        if (visibleBlogsCount >= filteredBlogs.length) {
+            loadMoreBtn.style.display = 'none';
+        } else {
+            loadMoreBtn.style.display = 'flex';
+        }
+    }
+    
+    // Add event listeners to new like buttons
+    document.querySelectorAll('.like-btn').forEach(btn => {
+        btn.addEventListener('click', handleLikeClick);
+    });
+}
+
+// Update blog counters
+function updateBlogCounters() {
+    const categories = window.BlogAPI.getAllCategories();
+    const filterBtns = document.querySelectorAll('.blog-filter .filter-btn');
+    
+    filterBtns.forEach(btn => {
+        const category = btn.getAttribute('data-category');
+        const matchingCategory = categories.find(cat => cat.id === category);
+        if (matchingCategory) {
+            const countSpan = btn.querySelector('.count');
+            if (countSpan) {
+                countSpan.textContent = matchingCategory.count;
+            }
+        }
+    });
+}
+
+// Handle blog filter click
+function setupBlogFilters() {
+    const filterBtns = document.querySelectorAll('.blog-filter .filter-btn');
+    const sortBtns = document.querySelectorAll('.blogs-controls .sort-btn');
+    
+    // Filter buttons
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            currentBlogFilter = btn.getAttribute('data-category');
+            visibleBlogsCount = 6; // Reset to initial count
+            displayFilteredBlogs();
+        });
+    });
+    
+    // Sort buttons
+    sortBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            sortBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            currentBlogSort = btn.getAttribute('data-sort');
+            displayFilteredBlogs();
+        });
+    });
+    
+    // Search functionality
+    const searchInput = document.getElementById('blogSearch');
+    if (searchInput) {
+        searchInput.addEventListener('input', debounce(() => {
+            const searchTerm = searchInput.value.toLowerCase();
+            if (searchTerm.length >= 2) {
+                const filtered = window.blogsData.filter(article => 
+                    article.title.toLowerCase().includes(searchTerm) ||
+                    article.excerpt.toLowerCase().includes(searchTerm) ||
+                    article.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
+                
+                const blogsContainer = document.getElementById('blogsGrid');
+                if (filtered.length > 0) {
+                    blogsContainer.innerHTML = filtered
+                        .map(article => createBlogCard(article, false))
+                        .join('');
+                } else {
+                    blogsContainer.innerHTML = '<div class="error-state"><h4>No matching articles found</h4><p>Try different keywords</p></div>';
+                }
+            } else if (searchTerm.length === 0) {
+                displayFilteredBlogs();
+            }
+        }, 300));
+    }
+    
+    // Load more button
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            console.log('Load More clicked! Current count:', visibleBlogsCount);
+            visibleBlogsCount += 3;  // Changed from 6 to 3 since we have fewer     articles
+
+            displayFilteredBlogs();
+
+            // Scroll to new items
+            setTimeout(() => {
+                const blogs = document.querySelectorAll('.blog-card');
+                if (blogs.length > 0) {
+                    const lastBlog = blogs[blogs.length - 1];
+                    lastBlog.scrollIntoView({ behavior: 'smooth', block:    'nearest' });
+                }
+            }, 100);
+        });
+    }
+}
+
+// Handle like button click
+function handleLikeClick(event) {
+    const button = event.currentTarget;
+    const articleId = parseInt(button.getAttribute('data-id'));
+    
+    if (!button.classList.contains('liked')) {
+        const newLikes = window.BlogAPI.toggleLike(articleId);
+        if (newLikes !== null) {
+            button.classList.add('liked');
+            button.innerHTML = `
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color: var(--danger)">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                ${newLikes} likes
+            `;
+            
+            // Add animation
+            button.style.animation = 'pulse 0.5s ease';
+            setTimeout(() => {
+                button.style.animation = '';
+            }, 500);
+        }
+    }
+}
+
+// Newsletter form
+const newsletterForm = document.getElementById('newsletterForm');
+if (newsletterForm) {
+    newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = newsletterForm.querySelector('input[type="email"]').value;
+        
+        // Show loading
+        const submitBtn = newsletterForm.querySelector('.btn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Subscribing...';
+        submitBtn.disabled = true;
+        
+        // Simulate API call
+        setTimeout(() => {
+            // In a real application, you would make an API call here
+            console.log('Subscribed email:', email);
+            
+            // Show success message
+            const successMsg = document.createElement('p');
+            successMsg.className = 'form-note success';
+            successMsg.textContent = 'Thank you! You\'ve been subscribed to the newsletter.';
+            successMsg.style.color = 'var(--success)';
+            successMsg.style.marginTop = 'var(--spacing-sm)';
+            
+            newsletterForm.appendChild(successMsg);
+            
+            // Reset form
+            newsletterForm.reset();
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+            
+            // Remove success message after 5 seconds
+            setTimeout(() => {
+                if (successMsg.parentNode) {
+                    successMsg.remove();
+                }
+            }, 5000);
+        }, 1500);
+    });
+}
+
+// Load blogs when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    // Load blogs
+    loadBlogs();
+    setupBlogFilters();
+});

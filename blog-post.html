@@ -1,0 +1,733 @@
+[file name]: blog-post.html
+[file content begin]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Wabita | Tech Blog</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Blog Post Styles -->
+    <style>
+        .blog-post-header {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 0 60px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .blog-post-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .blog-post-title {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-lg);
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .blog-post-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            flex-wrap: wrap;
+        }
+        
+        .author-card {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .author-info h4 {
+            font-size: var(--font-size-lg);
+            margin-bottom: 0.25rem;
+        }
+        
+        .author-info p {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+        
+        .meta-details {
+            display: flex;
+            gap: var(--spacing-md);
+            color: var(--text-muted);
+            font-size: var(--font-size-sm);
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .blog-content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing-2xl) 0;
+        }
+        
+        .blog-content {
+            font-size: var(--font-size-lg);
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        
+        .blog-content h2 {
+            font-size: var(--font-size-2xl);
+            color: var(--text-primary);
+            margin: var(--spacing-xl) 0 var(--spacing-md);
+        }
+        
+        .blog-content h3 {
+            font-size: var(--font-size-xl);
+            color: var(--text-primary);
+            margin: var(--spacing-lg) 0 var(--spacing-sm);
+        }
+        
+        .blog-content p {
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .blog-content img {
+            width: 100%;
+            border-radius: var(--border-radius-xl);
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .blog-content code {
+            font-family: var(--font-code);
+            background: var(--bg-tertiary);
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--border-radius-sm);
+            font-size: 0.9em;
+        }
+        
+        .blog-content pre {
+            background: var(--bg-secondary);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-lg);
+            overflow-x: auto;
+            margin: var(--spacing-lg) 0;
+        }
+        
+        .blog-content pre code {
+            background: none;
+            padding: 0;
+        }
+        
+        .blog-content blockquote {
+            border-left: 4px solid var(--accent-primary);
+            padding-left: var(--spacing-lg);
+            margin: var(--spacing-lg) 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+        
+        .blog-content ul, .blog-content ol {
+            margin-left: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .blog-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-lg);
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius-xl);
+            margin: var(--spacing-xl) 0;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        .share-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+        
+        .share-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-tertiary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: all var(--transition-base);
+        }
+        
+        .share-btn:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .related-articles {
+            padding: var(--spacing-2xl) 0;
+            background: var(--bg-secondary);
+        }
+        
+        .back-to-blog {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius-xl);
+            transition: all var(--transition-base);
+            text-decoration: none;
+            position: fixed;
+            top: 100px; /* Adjust based on your navbar height */
+            left: 20px;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .back-to-blog:hover {
+            background: var(--accent-primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+            gap: 0.75rem;
+        }
+
+        /* floating effect */
+        @keyframes floatButton {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .back-to-blog {
+            animation: floatButton 3s ease-in-out infinite;
+        }
+
+        /* Adjust blog post header padding to account for fixed button */
+        .blog-post-header {
+            padding-top: 140px !important; /* Increase top padding */
+        }
+        
+        @media (max-width: 768px) {
+            .blog-post-title {
+                font-size: 2.5rem;
+            }
+            
+            .blog-post-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-md);
+            }
+            
+            .blog-actions {
+                flex-direction: column;
+                gap: var(--spacing-lg);
+                align-items: flex-start;
+            }
+        }
+
+        /* For mobile responsiveness */
+        @media (max-width: 768px) {
+            .back-to-blog {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: var(--spacing-lg);
+                display: inline-flex;
+                animation: none;
+            }
+            
+            .blog-post-header {
+                padding-top: 100px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <span class="logo-bracket">&lt;</span>
+                    <span class="logo-name">Alex</span>
+                    <span class="logo-bracket">/&gt;</span>
+                </a>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li><a href="index.html#home" class="nav-link">Home</a></li>
+                    <li><a href="index.html#about" class="nav-link">About</a></li>
+                    <li><a href="index.html#skills" class="nav-link">Skills</a></li>
+                    <li><a href="index.html#projects" class="nav-link">Projects</a></li>
+                    <li><a href="index.html#blog" class="nav-link active">Blog</a></li>
+                    <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Post Content -->
+    <main>
+        <!-- Blog Post Header -->
+        <section class="blog-post-header">
+            <div class="container">
+                <a href="index.html#blog" class="back-to-blog fade-in">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M15 5L10 10L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back to Blog
+                </a>
+                
+                <div id="blogPostContent">
+                    <!-- Blog post will be loaded here -->
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Loading article...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Articles -->
+        <section class="related-articles">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Related Articles</h2>
+                    <p class="section-description">More insights you might find interesting</p>
+                </div>
+                
+                <div class="blogs-grid" id="relatedArticles">
+                    <!-- Related articles will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (same as index.html) -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Footer Brand -->
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-bracket">&lt;</span>
+                        <span class="logo-name">Alex Wabita</span>
+                        <span class="logo-bracket">/&gt;</span>
+                    </div>
+                    <p class="footer-tagline">
+                        Building intelligent solutions with Python, AI, and modern web technologies.
+                    </p>
+                    <div class="footer-social">
+                        <a href="https://github.com/AlexWabita" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/alex-wabita-502386295" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                            </svg>
+                        </a>
+                        <a href="https://x.com/Wabita_alex" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/9dantte6" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/>
+                                <path d="m16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke-width="2"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2"/>
+                            </svg>
+                        </a>
+                        <a href="mailto:njerialexwabita@gmail.com" aria-label="Email">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M22 6l-10 7L2 6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#skills">Skills</a></li>
+                        <li><a href="index.html#projects">Projects</a></li>
+                        <li><a href="index.html#blog">Blog</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/AlexWabita?tab=repositories" target="_blank" rel="noopener noreferrer">GitHub Repos</a></li>
+                        <li><a href="index.html#blog">Blog Articles</a></li>
+                        <li><a href="https://www.linkedin.com/in/alex-wabita-502386295" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-contact">
+                    <h4>Get In Touch</h4>
+                    <ul>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2"/>
+                                <path d="M22 6l-10 7L2 6" stroke-width="2"/>
+                            </svg>
+                            <a href="mailto:njerialexwabita@gmail.com">njerialexwabita@gmail.com</a>
+                        </li>
+                        <li>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-width="2"/>
+                                <circle cx="12" cy="10" r="3" stroke-width="2"/>
+                            </svg>
+                            <span>Nairobi, Kenya</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <p class="copyright">
+                    &copy; 2026 Alex Wabita. Built with 
+                    <span class="heart">♥</span> 
+                    and <span class="code">code</span>
+                </p>
+                <p class="footer-note">
+                    Designed & Developed by Alex Wabita
+                </p>
+            </div>
+
+            <!-- Back to Top Button -->
+            <button class="back-to-top" id="backToTop" aria-label="Back to top">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+                    <path d="M15 12.5L10 7.5L5 12.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/blog-data.js"></script>
+    
+    <!-- Blog Post Script -->
+    <script>
+        // Get blog post from URL parameter
+        function getBlogPostFromSlug() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const slug = urlParams.get('slug');
+            console.log('Looking for article with slug:', slug);
+
+            if (!slug) {
+                console.error('No slug found in URL');
+                return null;
+            }
+
+            const article = window.BlogAPI.getArticleBySlug(slug);
+            console.log('Found article:', article);
+            return article;
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+        
+        // Create blog post HTML
+        function createBlogPostHTML(article) {
+            if (!article) {
+                return `
+                    <div class="error-state">
+                        <h2>Article Not Found</h2>
+                        <p>The article you're looking for doesn't exist or has been moved.</p>
+                        <a href="index.html#blog" class="btn btn-primary">Back to Blog</a>
+                    </div>
+                `;
+            }
+            
+            // Increment views
+            window.BlogAPI.incrementViews(article.id);
+            
+            return `
+                <div class="fade-in">
+                    <h1 class="blog-post-title">${article.title}</h1>
+                    
+                    <div class="blog-post-meta">
+                        <div class="author-card">
+                            <div class="author-avatar">AW</div>
+                            <div class="author-info">
+                                <h4>${article.author}</h4>
+                                <p>System Developer & Python Enthusiast</p>
+                            </div>
+                        </div>
+                        
+                        <div class="meta-details">
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke-width="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6" stroke-width="2"/>
+                                    <line x1="8" y1="2" x2="8" y2="6" stroke-width="2"/>
+                                    <line x1="3" y1="10" x2="21" y2="10" stroke-width="2"/>
+                                </svg>
+                                ${formatDate(article.date)}
+                            </span>
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <circle cx="12" cy="12" r="10" stroke-width="2"/>
+                                    <polyline points="12 6 12 12 16 14" stroke-width="2"/>
+                                </svg>
+                                ${article.readTime}
+                            </span>
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-width="2"/>
+                                    <circle cx="12" cy="12" r="3" stroke-width="2"/>
+                                </svg>
+                                ${article.views} views
+                            </span>
+                            <span class="meta-item">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-width="2"/>
+                                </svg>
+                                ${article.likes} likes
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <img src="${article.image}" alt="${article.title}" class="fade-in-up">
+                    
+                    <div class="blog-content-wrapper">
+                        <div class="blog-content">
+                            <p><strong>${article.excerpt}</strong></p>
+                            
+                            <!-- Example blog content (in real app, this would come from article.content) -->
+                            <h2>Getting Started</h2>
+                            <p>As a third-year BSc IT student at Karatina University, I've found Python to be an incredibly versatile language. It's become my go-to tool for everything from web development to data analysis and automation.</p>
+                            
+                            <h2>Why Python?</h2>
+                            <p>Python's simplicity and readability make it perfect for beginners. The extensive library ecosystem means you can accomplish almost anything with just a few lines of code.</p>
+                            
+                            <pre><code class="python"># Example Python code
+def welcome_message():
+    name = input("Enter your name: ")
+    print(f"Welcome to Python, {name}!")
+    
+welcome_message()</code></pre>
+                            
+                            <h2>My Learning Approach</h2>
+                            <p>I believe in learning by doing. Here's my approach:</p>
+                            <ul>
+                                <li>Start with fundamentals (syntax, data structures)</li>
+                                <li>Build small projects immediately</li>
+                                <li>Contribute to open source</li>
+                                <li>Document everything</li>
+                            </ul>
+                            
+                            <blockquote>
+                                "The best way to learn programming is to build things that solve real problems."
+                            </blockquote>
+                            
+                            <h2>Next Steps</h2>
+                            <p>My journey continues with exploring AI/ML libraries like TensorFlow and scikit-learn. The possibilities are endless!</p>
+                        </div>
+                        
+                        <div class="blog-actions">
+                            <div class="action-buttons">
+                                <button class="like-btn btn btn-secondary" data-id="${article.id}">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-width="2"/>
+                                    </svg>
+                                    Like Article
+                                </button>
+                            </div>
+                            
+                            <div class="share-buttons">
+                                <a href="#" class="share-btn" title="Share on Twitter">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                    </svg>
+                                </a>
+                                <a href="#" class="share-btn" title="Share on LinkedIn">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Load related articles
+        function loadRelatedArticles(currentArticle) {
+            const container = document.getElementById('relatedArticles');
+            if (!container || !currentArticle) {
+                console.log('No container or current article');
+                return;
+            }
+
+            console.log('Loading related articles for:', currentArticle.id);
+
+            // Get all articles except current one
+            const allArticles = window.BlogAPI.getAllArticles();
+            const related = allArticles
+                .filter(article => article.id !== currentArticle.id)
+                .slice(0, 3);
+
+            console.log('Related articles found:', related.length);
+
+            if (related.length > 0) {
+                container.innerHTML = related.map(article => `
+                    <div class="blog-card scroll-reveal">
+                        <div class="blog-image">
+                            <img src="${article.image}" alt="${article.title}"      loading="lazy">
+                            <span class="blog-category">${article.category}</span>
+                        </div>
+
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-date">${formatDate(article.date)}</span>
+                                <span class="read-time">${article.readTime}</span>
+                            </div>
+
+                            <h3 class="blog-title">
+                                <a href="blog-post.html?slug=${article.slug}">
+                                    ${article.title.length > 60 ? article.title.substring       (0, 60) + '...' : article.title}
+                                </a>
+                            </h3>
+
+                            <p class="blog-excerpt">
+                                ${article.excerpt.length > 120 ? article.excerpt.substring      (0, 120) + '...' : article.excerpt}
+                            </p>
+
+                            <a href="blog-post.html?slug=${article.slug}"       class="read-more-btn">
+                                Read Article
+                                <svg width="16" height="16" viewBox="0 0 20 20"         fill="none">
+                                    <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor"       stroke-width="2" stroke-linecap="round"     stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = '<p class="loading-state">No related articles found.      </p>';
+            }
+        }
+        
+        // Handle like button in blog post
+        function handlePostLike() {
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.like-btn')) {
+                    const button = e.target.closest('.like-btn');
+                    const articleId = parseInt(button.getAttribute('data-id'));
+                    
+                    const newLikes = window.BlogAPI.toggleLike(articleId);
+                    if (newLikes !== null) {
+                        button.innerHTML = `
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="color: var(--danger)">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                            Liked (${newLikes})
+                        `;
+                        button.disabled = true;
+                    }
+                }
+            });
+        }
+        
+        // Initialize blog post page
+        document.addEventListener('DOMContentLoaded', () => {
+            const article = getBlogPostFromSlug();
+            const container = document.getElementById('blogPostContent');
+            
+            if (container) {
+                container.innerHTML = createBlogPostHTML(article);
+                if (article) {
+                    loadRelatedArticles(article);
+                    handlePostLike();
+                    
+                    // Update page title
+                    document.title = `${article.title} | Alex Wabita`;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

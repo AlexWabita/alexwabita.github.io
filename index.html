@@ -41,6 +41,7 @@
                     <li><a href="#about" class="nav-link">About</a></li>
                     <li><a href="#skills" class="nav-link">Skills</a></li>
                     <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#blog" class="nav-link">Blog</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
             </div>
@@ -510,6 +511,122 @@
             </div>
         </section>
 
+
+        <!-- Blog Section -->
+        <section id="blog" class="section blog-section">
+            <div class="container">
+                <div class="section-header scroll-reveal">
+                    <span class="section-label">Insights & Tutorials</span>
+                    <h2 class="section-title">Tech Blog</h2>
+                    <p class="section-description">
+                        Sharing my learning journey, technical insights, and development tutorials
+                    </p>
+                </div>
+            
+                <!-- Blog Categories Filter -->
+                <div class="blog-filter scroll-reveal">
+                    <div class="filter-container">
+                        <button class="filter-btn active" data-category="all">
+                            <span>All Posts</span>
+                            <span class="count">8</span>
+                        </button>
+                        <button class="filter-btn" data-category="python">
+                            <span>Python</span>
+                            <span class="count">2</span>
+                        </button>
+                        <button class="filter-btn" data-category="ai-ml">
+                            <span>AI/ML</span>
+                            <span class="count">1</span>
+                        </button>
+                        <button class="filter-btn" data-category="web-dev">
+                            <span>Web Dev</span>
+                            <span class="count">1</span>
+                        </button>
+                        <button class="filter-btn" data-category="cybersecurity">
+                            <span>Cybersecurity</span>
+                            <span class="count">2</span>
+                        </button>
+                        <button class="filter-btn" data-category="tools">
+                            <span>Tools</span>
+                            <span class="count">1</span>
+                        </button>
+                        <button class="filter-btn" data-category="cloud">
+                            <span>Cloud</span>
+                            <span class="count">1</span>
+                        </button>
+                    </div>
+                    <div class="search-container">
+                        <input type="text" id="blogSearch" placeholder="Search articles..." class="search-input">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="search-icon">
+                            <path d="M19 19L13 13M15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8Z"      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            
+                <!-- Featured Articles -->
+                <div class="featured-blogs">
+                    <h3 class="subsection-title scroll-reveal">Featured Articles</h3>
+                    <div class="featured-grid" id="featuredBlogs">
+                        <!-- Featured articles will be loaded here -->
+                        <div class="loading-state">
+                            <div class="spinner"></div>
+                            <p>Loading featured articles...</p>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- All Articles -->
+                <div class="all-blogs">
+                    <div class="blogs-header scroll-reveal">
+                        <h3 class="subsection-title">Recent Articles</h3>
+                        <div class="blogs-controls">
+                            <button class="sort-btn active" data-sort="recent">Most Recent</button>
+                            <button class="sort-btn" data-sort="popular">Most Popular</button>
+                            <button class="sort-btn" data-sort="likes">Most Liked</button>
+                        </div>
+                    </div>
+
+                    <div class="blogs-grid" id="blogsGrid">
+                        <!-- All articles will be loaded here -->
+                    </div>
+
+                    <!-- Load More Button -->
+                    <div class="load-more-container scroll-reveal">
+                        <button class="btn btn-secondary" id="loadMoreBtn">
+                            <span>Load More Articles</span>
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M10 5V15M5 10H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <p class="load-more-text">Showing <span id="visibleCount">6</span> of <span id="totalCount">8</span> articles</p>
+                    </div>
+                </div>
+            
+                <!-- Newsletter Subscription -->
+                <div class="newsletter-section scroll-reveal">
+                    <div class="newsletter-card">
+                        <div class="newsletter-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2"/>
+                                <path d="M22 6l-10 7L2 6" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="newsletter-content">
+                            <h3>Stay Updated</h3>
+                            <p>Get notified when I publish new articles about Python, AI, Web Dev, and Cybersecurity</p>
+                            <form class="newsletter-form" id="newsletterForm">
+                                <div class="form-group">
+                                    <input type="email" placeholder="Your email address" required>
+                                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                                </div>
+                                <p class="form-note">No spam. Unsubscribe anytime.</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Contact Section -->
         <section id="contact" class="section contact-section">
             <div class="container">
@@ -740,6 +857,17 @@
                     </ul>
                 </div>
 
+                <!-- Blog Links -->
+                <div class="footer-links">
+                    <h4>Blog Categories</h4>
+                    <ul>
+                        <li><a href="#blog" data-category="python">Python</a></li>
+                        <li><a href="#blog" data-category="ai-ml">AI/ML</a></li>
+                        <li><a href="#blog" data-category="web-dev">Web Dev</a></li>
+                        <li><a href="#blog" data-category="cybersecurity">Cybersecurity</a></li>
+                    </ul>
+                </div>
+
                 <!-- Resources -->
                 <div class="footer-links">
                     <h4>Resources</h4>
@@ -794,7 +922,9 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="js/blog-data.js"></script>
     <script src="js/main.js"></script>
     <script src="js/github-api.js"></script>
+    
 </body>
 </html>
