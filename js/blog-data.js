@@ -1,5 +1,5 @@
 // ==========================================
-// BLOG DATA & ARTICLES
+// BLOG DATA & ARTICLES - OPTIMIZED
 // ==========================================
 
 const blogArticles = [
@@ -14,7 +14,8 @@ const blogArticles = [
         readTime: "6 min read",
         category: "Python",
         tags: ["Python", "Learning", "Programming", "Beginner"],
-        image: "https://images.unsplash.com/photo-1526379879527-8559ecfcaec9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        // Optimized: Added width/height params and format=auto for WebP
+        image: "https://images.unsplash.com/photo-1526379879527-8559ecfcaec9?w=600&h=400&fit=crop&auto=format&q=75",
         views: 142,
         likes: 24,
         featured: true
@@ -30,7 +31,7 @@ const blogArticles = [
         readTime: "8 min read",
         category: "AI/ML",
         tags: ["AI", "Machine Learning", "Python", "Beginners"],
-        image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop&auto=format&q=75",
         views: 189,
         likes: 32,
         featured: true
@@ -46,7 +47,7 @@ const blogArticles = [
         readTime: "7 min read",
         category: "Cybersecurity",
         tags: ["Security", "Development", "Best Practices", "Web"],
-        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=400&fit=crop&auto=format&q=75",
         views: 215,
         likes: 41,
         featured: false
@@ -62,7 +63,7 @@ const blogArticles = [
         readTime: "5 min read",
         category: "Web Development",
         tags: ["Portfolio", "HTML/CSS", "JavaScript", "Design"],
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop&auto=format&q=75",
         views: 178,
         likes: 28,
         featured: false
@@ -78,7 +79,7 @@ const blogArticles = [
         readTime: "6 min read",
         category: "Tools",
         tags: ["Git", "GitHub", "Version Control", "Workflow"],
-        image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&h=400&fit=crop&auto=format&q=75",
         views: 156,
         likes: 19,
         featured: false
@@ -94,7 +95,7 @@ const blogArticles = [
         readTime: "9 min read",
         category: "Cybersecurity",
         tags: ["Linux", "Kali", "Parrot OS", "Security"],
-        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=400&fit=crop&auto=format&q=75",
         views: 132,
         likes: 22,
         featured: false
@@ -110,7 +111,7 @@ const blogArticles = [
         readTime: "7 min read",
         category: "Python",
         tags: ["Python", "Automation", "Scripting", "Productivity"],
-        image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600&h=400&fit=crop&auto=format&q=75",
         views: 167,
         likes: 31,
         featured: false
@@ -126,7 +127,7 @@ const blogArticles = [
         readTime: "8 min read",
         category: "Cloud",
         tags: ["AWS", "Azure", "Cloud", "DevOps"],
-        image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=400&fit=crop&auto=format&q=75",
         views: 145,
         likes: 17,
         featured: false
@@ -163,14 +164,14 @@ const BlogAPI = {
         const categoryMap = {
             "python": "Python",
             "ai-ml": "AI/ML",
-            "web-dev": "Web Dev",
+            "web-dev": "Web Development",
             "cybersecurity": "Cybersecurity",
             "tools": "Tools",
             "cloud": "Cloud"
         };
 
         const mappedCategory = categoryMap[category];
-        return blogArticles.filter(article => article.  category === mappedCategory);
+        return blogArticles.filter(article => article.category === mappedCategory);
     },
     
     // Get popular articles

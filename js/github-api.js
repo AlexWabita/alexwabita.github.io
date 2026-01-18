@@ -241,7 +241,7 @@ window.GitHubAPI = {
 // ==========================================
 
 // Uncomment to auto-load data when page loads
-/*
+
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('Loading GitHub data...');
     
@@ -255,4 +255,3 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('GitHub Stats:', stats);
     }
 });
-*/

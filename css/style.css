@@ -314,7 +314,7 @@ body.light-theme .navbar {
 
 .footer-content {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-xl);
     text-align: left;
@@ -2322,6 +2322,23 @@ body.light-theme .navbar {
     padding: var(--spacing-xl);
 }
 
+.subsection-title {
+    font-size: var(--font-size-2xl);
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.blogs-controls {
+    display: flex;
+    justify-content: left;
+    gap: var(--spacing-sm);
+    margin-bottom: 10px;
+}
+
+.blog-filter.scroll-reveal.revealed {
+    margin-bottom: 10px;
+    display: inline-flex;
+}
 /* FIX SCROLL REVEAL ISSUE */
 .scroll-reveal.revealed {
     opacity: 1 !important;

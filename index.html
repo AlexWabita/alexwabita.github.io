@@ -14,9 +14,13 @@
     
     <title>Alex Wabita | System Developer & Python Enthusiast</title>
     
-    <!-- Fonts -->
+    <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://api.github.com">
+    
+    <!-- Fonts with display swap for faster rendering -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
     <!-- Stylesheets -->
@@ -24,6 +28,21 @@
     <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
+
+    <!-- Loading Screen -->
+    <div id="page-loader" style="position: fixed; inset: 0; background: #0a0e27;    display: flex; align-items: center; justify-content: center; z-index: 9999;">
+        <div style="text-align: center;">
+            <div class="spinner" style="width: 50px; height: 50px; border: 4px solid    rgba(0, 217, 255, 0.2); border-top-color: #00d9ff; border-radius: 50%;     animation: spin 1s linear infinite;"></div>
+            <p style="color: #00d9ff; margin-top: 1rem; font-family: 'Inter',   sans-serif;">Loading...</p>
+        </div>
+    </div>
+
+    <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>    
+
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
@@ -511,7 +530,6 @@
             </div>
         </section>
 
-
         <!-- Blog Section -->
         <section id="blog" class="section blog-section">
             <div class="container">
@@ -519,7 +537,7 @@
                     <span class="section-label">Insights & Tutorials</span>
                     <h2 class="section-title">Tech Blog</h2>
                     <p class="section-description">
-                        Sharing my learning journey, technical insights, and development tutorials
+                        Sharing my learning journey, technical insights, and development        tutorials
                     </p>
                 </div>
             
@@ -568,21 +586,20 @@
                         </button>
                     </div>
                     <div class="search-container">
-                        <input type="text" id="blogSearch" placeholder="Search articles..." class="search-input">
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" class="search-icon">
-                            <path d="M19 19L13 13M15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8Z"      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <input type="text" id="blogSearch" placeholder="Search articles...      " class="search-input">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"         class="search-icon">
+                            <path d="M19 19L13 13M15 8C15 11.866 11.866 15 8 15C4.13401         15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401         15 8Z" stroke="currentColor" stroke-width="2"       stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
                 </div>
             
-            
                 <!-- All Articles -->
                 <div class="all-blogs">
                     <div class="blogs-header scroll-reveal">
-                        <h3 class="subsection-title">Recent Articles</h3>
+                        <h3 class="subsection-title">Articles</h3>
                         <div class="blogs-controls">
-                            <button class="sort-btn active" data-sort="recent">Most Recent</button>
-                            <button class="sort-btn" data-sort="popular">Most Popular</button>
+                            <button class="sort-btn active" data-sort="recent">Most         Recent</button>
+                            <button class="sort-btn" data-sort="popular">Most Popular</     button>
                             <button class="sort-btn" data-sort="likes">Most Liked</button>
                         </div>
                     </div>
@@ -596,10 +613,10 @@
                         <button class="btn btn-secondary" id="loadMoreBtn">
                             <span>Load More Articles</span>
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M10 5V15M5 10H15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 5V15M5 10H15" stroke="currentColor"        stroke-width="2" stroke-linecap="round"     stroke-linejoin="round"/>
                             </svg>
                         </button>
-                        <p class="load-more-text">Showing <span id="visibleCount">6</span> of <span id="totalCount">8</span> articles</p>
+                        <p class="load-more-text">Showing <span id="visibleCount">6</       span> of <span id="totalCount">8</span> articles</p>
                     </div>
                 </div>
             
@@ -607,18 +624,18 @@
                 <div class="newsletter-section scroll-reveal">
                     <div class="newsletter-card">
                         <div class="newsletter-icon">
-                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2"/>
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none"         stroke="currentColor">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1        0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2"/>
                                 <path d="M22 6l-10 7L2 6" stroke-width="2"/>
                             </svg>
                         </div>
                         <div class="newsletter-content">
                             <h3>Stay Updated</h3>
-                            <p>Get notified when I publish new articles about Python, AI, Web Dev, and Cybersecurity</p>
+                            <p>Get notified when I publish new articles about Python, AI,       Web Dev, and Cybersecurity</p>
                             <form class="newsletter-form" id="newsletterForm">
                                 <div class="form-group">
-                                    <input type="email" placeholder="Your email address" required>
-                                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                                    <input type="email" placeholder="Your email address"        required>
+                                    <button type="submit" class="btn        btn-primary">Subscribe</button>
                                 </div>
                                 <p class="form-note">No spam. Unsubscribe anytime.</p>
                             </form>
@@ -652,18 +669,6 @@
                             <div class="info-content">
                                 <h4>Email</h4>
                                 <a href="mailto:njerialexwabita@gmail.com">njerialexwabita@gmail.com</a>
-                            </div>
-                        </div>
-
-                        <div class="info-card">
-                            <div class="info-icon">
-                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
-                            <div class="info-content">
-                                <h4>Call</h4>
-                                <a href="tel:+254718462005">+254 718 462 005</a>
                             </div>
                         </div>
 
@@ -708,18 +713,6 @@
                                 <a href="https://www.linkedin.com/in/alex-wabita-502386295" target="_blank" rel="noopener noreferrer" class="social-icon-contact" aria-label="LinkedIn">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                                    </svg>
-                                </a>
-                                <a href="https://x.com/Wabita_alex" target="_blank" rel="noopener noreferrer" class="social-icon-contact" aria-label="X (Twitter)">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                                    </svg>
-                                </a>
-                                <a href="https://www.instagram.com/9dantte6" target="_blank" rel="noopener noreferrer" class="social-icon-contact" aria-label="Instagram">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/>
-                                        <path d="m16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke-width="2"/>
-                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2"/>
                                     </svg>
                                 </a>
                                 <a href="mailto:njerialexwabita@gmail.com" class="social-icon-contact" aria-label="Email">
@@ -825,18 +818,6 @@
                                 <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                             </svg>
                         </a>
-                        <a href="https://x.com/Wabita_alex" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                            </svg>
-                        </a>
-                        <a href="https://www.instagram.com/9dantte6" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="2"/>
-                                <path d="m16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke-width="2"/>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="2"/>
-                            </svg>
-                        </a>
                         <a href="mailto:njerialexwabita@gmail.com" aria-label="Email">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -855,17 +836,6 @@
                         <li><a href="#skills">Skills</a></li>
                         <li><a href="#projects">Projects</a></li>
                         <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-
-                <!-- Blog Links -->
-                <div class="footer-links">
-                    <h4>Blog Categories</h4>
-                    <ul>
-                        <li><a href="#blog" data-category="python">Python</a></li>
-                        <li><a href="#blog" data-category="ai-ml">AI/ML</a></li>
-                        <li><a href="#blog" data-category="web-dev">Web Dev</a></li>
-                        <li><a href="#blog" data-category="cybersecurity">Cybersecurity</a></li>
                     </ul>
                 </div>
 
@@ -923,9 +893,8 @@
     </footer>
 
     <!-- Scripts -->
-    <script src="js/blog-data.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/github-api.js"></script>
-    
+    <script src="js/blog-data.js" defer></script>
+    <script src="js/github-api.js" defer></script>
+    <script src="js/main.js" defer></script>
 </body>
 </html>

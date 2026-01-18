@@ -1008,3 +1008,12 @@ document.addEventListener('DOMContentLoaded', () => {
     loadBlogs();
     setupBlogFilters();
 });
+
+// Hide loader when page fully loads
+window.addEventListener('load', () => {
+    const loader = document.getElementById('page-loader');
+    if (loader) {
+        loader.style.opacity = '0';
+        setTimeout(() => loader.remove(), 300);
+    }
+});
