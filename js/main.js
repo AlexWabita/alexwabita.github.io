@@ -566,3 +566,67 @@ function setupProjectSorting() {
 document.addEventListener('DOMContentLoaded', () => {
     loadProjects();
 });
+
+// ==========================================
+// CONTACT FORM HANDLING
+// ==========================================
+
+const contactForm = document.getElementById('contactForm');
+const formMessage = document.getElementById('formMessage');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+        
+        // Show loading state
+        const submitBtn = contactForm.querySelector('.submit-btn');
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'flex';
+        submitBtn.disabled = true;
+        
+        // Hide previous messages
+        formMessage.classList.remove('success', 'error');
+        formMessage.style.display = 'none';
+        
+        try {
+            // Simulate sending (replace with actual email service like Formspree, EmailJS, etc.)
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // For now, just open email client
+            const mailtoLink = `mailto:njerialexwabita@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+                `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+            )}`;
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            formMessage.textContent = 'Thank you! Your message has been prepared. Your email client should open shortly.';
+            formMessage.classList.add('success');
+            formMessage.style.display = 'block';
+            
+            // Reset form
+            contactForm.reset();
+            
+        } catch (error) {
+            console.error('Form submission error:', error);
+            formMessage.textContent = 'Oops! Something went wrong. Please try emailing me directly.';
+            formMessage.classList.add('error');
+            formMessage.style.display = 'block';
+        } finally {
+            // Reset button state
+            btnText.style.display = 'inline';
+            btnLoading.style.display = 'none';
+            submitBtn.disabled = false;
+        }
+    });
+}
